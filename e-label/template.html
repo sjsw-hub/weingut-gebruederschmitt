@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de" data-lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -67,51 +67,110 @@
     font-size: 0.8rem;
     color: #666;
   }
+  .lang-switch {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+  .lang-switch button {
+    font: inherit;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid #999;
+    border-radius: 999px;
+    background: transparent;
+    cursor: pointer;
+  }
+  .lang-switch button[aria-pressed="true"] {
+    background: currentColor;
+    color: Canvas;
+    font-weight: 600;
+  }
+  /* Show/hide by current language. Default (no JS) = German. */
+  html[data-lang="de"] .lang-en { display: none; }
+  html[data-lang="en"] .lang-de { display: none; }
 </style>
 </head>
 <body>
+
+  <div class="lang-switch">
+    <button type="button" id="lang-de-btn" aria-pressed="true">DE</button>
+    <button type="button" id="lang-en-btn" aria-pressed="false">EN</button>
+  </div>
 
   <h1>$name $vintage</h1>
   <p class="subtitle">$producer, $region, $country</p>
 
   <dl class="meta">
-    <dt>Volume</dt><dd>$volume_ml ml</dd>
-    <dt>Alcohol</dt><dd>$alcohol_pct% vol.</dd>
-    <dt>Batch / Lot</dt><dd>$batch</dd>
+    <dt><span class="lang-de">Volumen</span><span class="lang-en">Volume</span></dt><dd>$volume_ml ml</dd>
+    <dt><span class="lang-de">Alkohol</span><span class="lang-en">Alcohol</span></dt><dd>$alcohol_pct% vol.</dd>
+    <dt><span class="lang-de">Charge / Los</span><span class="lang-en">Batch / Lot</span></dt><dd>$batch</dd>
   </dl>
 
-  <section aria-labelledby="ingredients-heading">
-    <h2 id="ingredients-heading">Ingredients</h2>
-    <p>$ingredients</p>
+  <section>
+    <h2><span class="lang-de">Zutaten</span><span class="lang-en">Ingredients</span></h2>
+    <p class="lang-de">$ingredients_de</p>
+    <p class="lang-en">$ingredients_en</p>
   </section>
 
-  <section aria-labelledby="allergens-heading">
-    <h2 id="allergens-heading">Allergens</h2>
-    <p class="allergen">$allergens</p>
+  <section>
+    <h2><span class="lang-de">Allergene</span><span class="lang-en">Allergens</span></h2>
+    <p class="allergen lang-de">$allergens_de</p>
+    <p class="allergen lang-en">$allergens_en</p>
   </section>
 
-  <section aria-labelledby="nutrition-heading">
-    <h2 id="nutrition-heading">Nutrition Declaration</h2>
-    <p><em>Per 100 ml</em></p>
+  <section>
+    <h2><span class="lang-de">Nährwertdeklaration</span><span class="lang-en">Nutrition Declaration</span></h2>
+    <p><em><span class="lang-de">Pro 100 ml</span><span class="lang-en">Per 100 ml</span></em></p>
     <table>
       <thead>
-        <tr><th>Nutrient</th><th>Amount</th></tr>
+        <tr>
+          <th><span class="lang-de">Nährstoff</span><span class="lang-en">Nutrient</span></th>
+          <th><span class="lang-de">Menge</span><span class="lang-en">Amount</span></th>
+        </tr>
       </thead>
       <tbody>
-        <tr><td>Energy</td><td>$energy_kj kJ / $energy_kcal kcal</td></tr>
-        <tr><td>Fat</td><td>$fat_g g</td></tr>
-        <tr><td>of which saturates</td><td>$saturates_g g</td></tr>
-        <tr><td>Carbohydrate</td><td>$carbohydrate_g g</td></tr>
-        <tr><td>of which sugars</td><td>$sugars_g g</td></tr>
-        <tr><td>Protein</td><td>$protein_g g</td></tr>
-        <tr><td>Salt</td><td>$salt_g g</td></tr>
+        <tr><td><span class="lang-de">Brennwert</span><span class="lang-en">Energy</span></td><td>$energy_kj kJ / $energy_kcal kcal</td></tr>
+        <tr><td><span class="lang-de">Fett</span><span class="lang-en">Fat</span></td><td>$fat_g g</td></tr>
+        <tr><td><span class="lang-de">davon gesättigte Fettsäuren</span><span class="lang-en">of which saturates</span></td><td>$saturates_g g</td></tr>
+        <tr><td><span class="lang-de">Kohlenhydrate</span><span class="lang-en">Carbohydrate</span></td><td>$carbohydrate_g g</td></tr>
+        <tr><td><span class="lang-de">davon Zucker</span><span class="lang-en">of which sugars</span></td><td>$sugars_g g</td></tr>
+        <tr><td><span class="lang-de">Eiweiß</span><span class="lang-en">Protein</span></td><td>$protein_g g</td></tr>
+        <tr><td><span class="lang-de">Salz</span><span class="lang-en">Salt</span></td><td>$salt_g g</td></tr>
       </tbody>
     </table>
   </section>
 
   <footer>
-    <p>This page provides the ingredients list and nutrition declaration required under EU Regulation (EU) 2021/2117 for wine products. It does not require login and does not collect personal data to be accessed.</p>
+    <p class="lang-de">Diese Seite enthält die Zutatenliste und Nährwertdeklaration gemäß Verordnung (EU) 2021/2117 für Weinerzeugnisse. Der Zugriff erfordert weder eine Anmeldung noch die Angabe personenbezogener Daten.</p>
+    <p class="lang-en">This page provides the ingredients list and nutrition declaration required under EU Regulation (EU) 2021/2117 for wine products. It does not require login and does not collect personal data to be accessed.</p>
   </footer>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var deBtn = document.getElementById('lang-de-btn');
+      var enBtn = document.getElementById('lang-en-btn');
+
+      function setLang(lang) {
+        root.setAttribute('data-lang', lang);
+        root.setAttribute('lang', lang);
+        deBtn.setAttribute('aria-pressed', String(lang === 'de'));
+        enBtn.setAttribute('aria-pressed', String(lang === 'en'));
+        try { localStorage.setItem('elabel-lang', lang); } catch (e) {}
+      }
+
+      deBtn.addEventListener('click', function () { setLang('de'); });
+      enBtn.addEventListener('click', function () { setLang('en'); });
+
+      var saved = null;
+      try { saved = localStorage.getItem('elabel-lang'); } catch (e) {}
+      if (saved === 'en' || saved === 'de') {
+        setLang(saved);
+      } else if (navigator.language && navigator.language.toLowerCase().indexOf('de') !== 0) {
+        setLang('en');
+      }
+    })();
+  </script>
 
 </body>
 </html>

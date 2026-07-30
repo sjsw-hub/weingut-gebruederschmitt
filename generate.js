@@ -19,10 +19,17 @@ const OUTPUT_DIR = path.join(ROOT, "e-label");
 
 const REQUIRED_COLUMNS = [
   "slug", "name", "vintage", "producer", "region", "country",
-  "volume_ml", "alcohol_pct", "batch", "ingredients", "allergens",
+  "volume_ml", "alcohol_pct", "batch", "ingredients_de", "allergens_de",
   "energy_kj", "energy_kcal", "fat_g", "saturates_g",
   "carbohydrate_g", "sugars_g", "protein_g", "salt_g",
 ];
+
+// English translation columns are optional — fall back to the German text
+// if a translation hasn't been filled in yet.
+const OPTIONAL_FALLBACK_COLUMNS = {
+  ingredients_en: "ingredients_de",
+  allergens_en: "allergens_de",
+};
 
 function parseCsv(text) {
   const rows = [];
@@ -78,6 +85,11 @@ function loadRows() {
     header.forEach((key, idx) => {
       obj[key] = cols[idx] !== undefined ? cols[idx] : "";
     });
+    for (const [enCol, deCol] of Object.entries(OPTIONAL_FALLBACK_COLUMNS)) {
+      if (!obj[enCol] || !obj[enCol].trim()) {
+        obj[enCol] = obj[deCol];
+      }
+    }
     return obj;
   });
 }

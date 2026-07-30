@@ -75,10 +75,27 @@ producer, the simple slug-based URL above is simpler and sufficient.
    |---|---|
    | `slug` | URL-safe id, becomes the filename (`e-label/<slug>.html`) |
    | `name`, `vintage`, `producer`, `region`, `country` | Product identity |
-   | `volume_ml`, `alcohol_pct`, `batch` | Bottle/batch details |
-   | `ingredients` | Free text ingredients list |
-   | `allergens` | Free text allergen statement |
+   | `volume_ml`, `alcohol_pct`, `batch` | Bottle/batch details. **`alcohol_pct` must be the *actual/effective* alcoholic strength ("vorhandener Alkohol"), not the total/potential alcohol** — check your lab report for both figures. |
+   | `ingredients_de` | Ingredients list, German (required) |
+   | `ingredients_en` | Ingredients list, English. Optional — if left blank, the English view falls back to the German text |
+   | `allergens_de` | Allergen statement, German (required) |
+   | `allergens_en` | Allergen statement, English. Optional — falls back to German if blank |
    | `energy_kj`, `energy_kcal`, `fat_g`, `saturates_g`, `carbohydrate_g`, `sugars_g`, `protein_g`, `salt_g` | Nutrition declaration, all **per 100 ml** |
+
+   The generated page defaults to **German**, with an EN/DE toggle button
+   (top-right) that switches instantly — no page reload, choice remembered
+   per browser via `localStorage`.
+
+   > **Note on lab reports:** if your lab's nutrition line is only a generic
+   > line like *"BEISPIEL: Enthält geringfügige Mengen von Fett, ..."*
+   > ("EXAMPLE: contains minor amounts of..."), that's boilerplate the lab
+   > prints when it hasn't individually measured fat/saturates/protein/salt —
+   > common for wine since they're consistently negligible — not a real
+   > result for your batch. Using conservative values like `<0.5` (escaped
+   > as `&lt;0.5` in the CSV so it doesn't get parsed as an HTML tag) is
+   > common practice, but confirm with your compliance advisor that relying
+   > on generally-recognized data (rather than a per-batch lab result) for
+   > those specific nutrients is acceptable for your labeling.
 
 2. Add one row per product (or per vintage/batch, if the nutrition values
    change year to year).
