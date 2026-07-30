@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E-Label — Grüner Veltliner 2024</title>
+<style>
+  :root {
+    color-scheme: light dark;
+  }
+  body {
+    font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    line-height: 1.5;
+  }
+  h1 {
+    font-size: 1.4rem;
+    margin-bottom: 0;
+  }
+  .subtitle {
+    color: #666;
+    margin-top: 0.25rem;
+  }
+  section {
+    margin-top: 2rem;
+  }
+  h2 {
+    font-size: 1.1rem;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 0.25rem;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+  }
+  th, td {
+    text-align: left;
+    padding: 0.4rem 0.5rem;
+    border-bottom: 1px solid #ccc;
+  }
+  th {
+    font-weight: 600;
+  }
+  td:last-child, th:last-child {
+    text-align: right;
+  }
+  .allergen {
+    font-weight: 600;
+  }
+  .meta {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.25rem 1rem;
+    margin-top: 0.5rem;
+  }
+  .meta dt {
+    color: #666;
+  }
+  .meta dd {
+    margin: 0;
+  }
+  footer {
+    margin-top: 2.5rem;
+    font-size: 0.8rem;
+    color: #666;
+  }
+</style>
+</head>
+<body>
+
+  <h1>Grüner Veltliner 2024</h1>
+  <p class="subtitle">Weingut Beispiel, Wachau, Austria</p>
+
+  <dl class="meta">
+    <dt>Volume</dt><dd>750 ml</dd>
+    <dt>Alcohol</dt><dd>12.5% vol.</dd>
+    <dt>Batch / Lot</dt><dd>L2024-0917</dd>
+  </dl>
+
+  <section aria-labelledby="ingredients-heading">
+    <h2 id="ingredients-heading">Ingredients</h2>
+    <p>Grapes (Grüner Veltliner), sulfites, fining agent: potassium caseinate (milk).</p>
+  </section>
+
+  <section aria-labelledby="allergens-heading">
+    <h2 id="allergens-heading">Allergens</h2>
+    <p class="allergen">Contains sulfites and milk (casein).</p>
+  </section>
+
+  <section aria-labelledby="nutrition-heading">
+    <h2 id="nutrition-heading">Nutrition Declaration</h2>
+    <p><em>Per 100 ml</em></p>
+    <table>
+      <thead>
+        <tr><th>Nutrient</th><th>Amount</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Energy</td><td>289 kJ / 69 kcal</td></tr>
+        <tr><td>Fat</td><td>0 g</td></tr>
+        <tr><td>of which saturates</td><td>0 g</td></tr>
+        <tr><td>Carbohydrate</td><td>1.5 g</td></tr>
+        <tr><td>of which sugars</td><td>0.8 g</td></tr>
+        <tr><td>Protein</td><td>0.1 g</td></tr>
+        <tr><td>Salt</td><td>0.01 g</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer>
+    <p>This page provides the ingredients list and nutrition declaration required under EU Regulation (EU) 2021/2117 for wine products. It does not require login and does not collect personal data to be accessed.</p>
+  </footer>
+
+</body>
+</html>

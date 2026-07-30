@@ -1,0 +1,2 @@
+slug,name,vintage,producer,region,country,volume_ml,alcohol_pct,batch,ingredients,allergens,energy_kj,energy_kcal,fat_g,saturates_g,carbohydrate_g,sugars_g,protein_g,salt_g
+gruener-veltliner-2024,Grüner Veltliner,2024,Weingut Beispiel,Wachau,Austria,750,12.5,L2024-0917,"Grapes (Grüner Veltliner), sulfites, fining agent: potassium caseinate (milk).","Contains sulfites and milk (casein).",289,69,0,0,1.5,0.8,0.1,0.01
