@@ -5,9 +5,12 @@
 //     node generate.js
 //
 // Reads products.csv (one row per product/batch) and writes one HTML page
-// per row to e-label/<slug>.html, plus an e-label/index.html listing all of
-// them. Edit products.csv in Excel/Google Sheets/any spreadsheet app, save
-// as CSV, then re-run this script.
+// per row to e-label/<slug>.html, plus a landing page at index.html that
+// lists all of them. Edit products.csv in Excel/Google Sheets/any
+// spreadsheet app, save as CSV, then re-run this script.
+//
+// Page layouts live in e-label/template.html (product pages) and
+// index-template.html (landing page).
 
 const fs = require("fs");
 const path = require("path");
@@ -15,6 +18,7 @@ const path = require("path");
 const ROOT = __dirname;
 const CSV_PATH = path.join(ROOT, "products.csv");
 const TEMPLATE_PATH = path.join(ROOT, "e-label", "template.html");
+const INDEX_TEMPLATE_PATH = path.join(ROOT, "index-template.html");
 const OUTPUT_DIR = path.join(ROOT, "e-label");
 
 const REQUIRED_COLUMNS = [
@@ -127,16 +131,17 @@ function main() {
     indexItems.push({ slug, title: `${row.name} ${row.vintage}` });
   }
 
-  const indexHtml = `<!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><title>E-Labels</title></head><body>
-<h1>E-Labels</h1>
-<ul>
-${indexItems.map(({ slug, title }) => `  <li><a href="${slug}.html">${title}</a></li>`).join("\n")}
-</ul>
-</body></html>
-`;
-  fs.writeFileSync(path.join(OUTPUT_DIR, "index.html"), indexHtml, "utf8");
-  console.log("wrote e-label/index.html");
+  // Landing page at the site root: lists every product and links into e-label/.
+  const indexTemplate = fs.readFileSync(INDEX_TEMPLATE_PATH, "utf8");
+  const productList = indexItems
+    .map(({ slug, title }) => `      <li><a href="e-label/${slug}.html">${title}</a></li>`)
+    .join("\n");
+  fs.writeFileSync(
+    path.join(ROOT, "index.html"),
+    indexTemplate.replace("$products", productList),
+    "utf8"
+  );
+  console.log("wrote index.html");
 }
 
 main();

@@ -107,9 +107,9 @@ producer, the simple slug-based URL above is simpler and sufficient.
 
    This reads every row in `products.csv` and writes one page per row to
    `e-label/<slug>.html`, using [`e-label/template.html`](e-label/template.html)
-   as the layout, plus an `e-label/index.html` listing all of them. Re-run
-   it any time you edit the spreadsheet — it always regenerates every page
-   from scratch.
+   as the layout, plus a landing page at `index.html` from
+   [`index-template.html`](index-template.html). Re-run it any time you edit
+   the spreadsheet — it always regenerates every page from scratch.
 4. Commit and push. Once GitHub Pages is enabled for this repo, each page
    is live at `https://<username>.github.io/eu-elabel-qr/e-label/<slug>.html`
    — that's the URL to encode into that product's QR code.
@@ -121,10 +121,30 @@ the generator.
 
 - [`products.csv`](products.csv) — the spreadsheet: one row per product/batch.
 - [`generate.js`](generate.js) — reads `products.csv`, writes the HTML pages.
-- [`e-label/template.html`](e-label/template.html) — the page layout, with
-  `$placeholder` fields filled in from each CSV row.
-- `e-label/<slug>.html` — generated output, one per product. Don't hand-edit
-  these; edit `products.csv` and re-run `generate.js` instead.
+- [`e-label/template.html`](e-label/template.html) — the product page layout,
+  with `$placeholder` fields filled in from each CSV row.
+- [`index-template.html`](index-template.html) — the landing page layout.
+  Winery name, address and intro text are edited **here** (not in the CSV);
+  `$products` is replaced with the generated product list.
+- `e-label/<slug>.html` and `index.html` — generated output. Don't hand-edit
+  these; edit the CSV/templates and re-run `generate.js` instead.
+
+## Keeping the landing page compliant
+
+The "mandatory information must not be mixed with marketing" rule applies to
+the **product e-label pages** that QR codes point to — keep those exactly as
+the template produces them. The landing page (`index.html`) is navigation,
+so brief factual information is fine there. Two hard limits apply anywhere on
+the site:
+
+- **No health claims of any kind.** Prohibited outright on beverages over
+  1.2% ABV (Regulation (EC) 1924/2006 Art. 4(3)) — no "healthy", "good for
+  you", antioxidant/wellbeing references, etc.
+- **No nutrition claims** other than the narrow permitted set for alcohol
+  ("low alcohol", "reduced alcohol content", "reduced energy").
+
+Keep landing-page copy descriptive and factual rather than promotional, and
+keep any webshop or marketing site on a separate page from these.
 
 ## Generating the actual QR code image
 

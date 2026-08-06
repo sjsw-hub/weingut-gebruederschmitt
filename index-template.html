@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="de" data-lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weingut Gebrüder Schmitt — E-Label / Produktinformationen</title>
+<style>
+  :root {
+    color-scheme: light dark;
+  }
+  body {
+    font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    line-height: 1.5;
+  }
+  h1 {
+    font-size: 1.4rem;
+    margin-bottom: 0;
+  }
+  .subtitle {
+    color: #666;
+    margin-top: 0.25rem;
+  }
+  section {
+    margin-top: 2rem;
+  }
+  h2 {
+    font-size: 1.1rem;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 0.25rem;
+  }
+  ul.products {
+    list-style: none;
+    padding: 0;
+  }
+  ul.products li {
+    border-bottom: 1px solid #ccc;
+  }
+  ul.products a {
+    display: block;
+    padding: 0.7rem 0.2rem;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  ul.products a:hover,
+  ul.products a:focus {
+    text-decoration: underline;
+  }
+  address {
+    font-style: normal;
+  }
+  footer {
+    margin-top: 2.5rem;
+    font-size: 0.8rem;
+    color: #666;
+  }
+  .lang-switch {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+  .lang-switch button {
+    font: inherit;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid #999;
+    border-radius: 999px;
+    background: transparent;
+    cursor: pointer;
+  }
+  .lang-switch button[aria-pressed="true"] {
+    background: currentColor;
+    color: Canvas;
+    font-weight: 600;
+  }
+  /* Show/hide by current language. Default (no JS) = German. */
+  html[data-lang="de"] .lang-en { display: none; }
+  html[data-lang="en"] .lang-de { display: none; }
+</style>
+</head>
+<body>
+
+  <div class="lang-switch">
+    <button type="button" id="lang-de-btn" aria-pressed="true">DE</button>
+    <button type="button" id="lang-en-btn" aria-pressed="false">EN</button>
+  </div>
+
+  <h1>Weingut Gebrüder Schmitt</h1>
+  <p class="subtitle">Guntersblum, Rheinhessen, Deutschland</p>
+
+  <section>
+    <h2><span class="lang-de">Über diese Seite</span><span class="lang-en">About this page</span></h2>
+    <p class="lang-de">Hier finden Sie die gesetzlich vorgeschriebenen Angaben
+      zu Zutaten und Nährwerten unserer Weine gemäß Verordnung (EU) 2021/2117.
+      Wählen Sie das Erzeugnis aus, dessen QR-Code Sie gescannt haben.</p>
+    <p class="lang-en">This page provides the legally required ingredient and
+      nutrition information for our wines under Regulation (EU) 2021/2117.
+      Select the product whose QR code you scanned.</p>
+  </section>
+
+  <section>
+    <h2><span class="lang-de">Erzeugnisse</span><span class="lang-en">Products</span></h2>
+    <ul class="products">
+$products
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="lang-de">Verantwortlicher Lebensmittelunternehmer</span><span class="lang-en">Responsible food business operator</span></h2>
+    <address>
+      Weingut Gebrüder Schmitt<br>
+      Eimsheimer Straße 20<br>
+      67583 Guntersblum<br>
+      <span class="lang-de">Deutschland</span><span class="lang-en">Germany</span>
+    </address>
+  </section>
+
+  <footer>
+    <p class="lang-de">Diese Seite dient ausschließlich der Bereitstellung der
+      gesetzlich vorgeschriebenen Zutaten- und Nährwertangaben. Der Zugriff
+      erfordert weder eine Anmeldung noch die Angabe personenbezogener Daten.
+      Es werden keine Nutzerdaten erhoben oder ausgewertet.</p>
+    <p class="lang-en">This page exists solely to provide the legally required
+      ingredient and nutrition information. Access requires no login and no
+      personal data. No user data is collected or analysed.</p>
+    <p class="lang-de">Alkoholgenuss ab 18 Jahren.</p>
+    <p class="lang-en">Alcohol for persons aged 18 and over.</p>
+  </footer>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var deBtn = document.getElementById('lang-de-btn');
+      var enBtn = document.getElementById('lang-en-btn');
+
+      function setLang(lang) {
+        root.setAttribute('data-lang', lang);
+        root.setAttribute('lang', lang);
+        deBtn.setAttribute('aria-pressed', String(lang === 'de'));
+        enBtn.setAttribute('aria-pressed', String(lang === 'en'));
+        try { localStorage.setItem('elabel-lang', lang); } catch (e) {}
+      }
+
+      deBtn.addEventListener('click', function () { setLang('de'); });
+      enBtn.addEventListener('click', function () { setLang('en'); });
+
+      var saved = null;
+      try { saved = localStorage.getItem('elabel-lang'); } catch (e) {}
+      if (saved === 'en' || saved === 'de') {
+        setLang(saved);
+      } else if (navigator.language && navigator.language.toLowerCase().indexOf('de') !== 0) {
+        setLang('en');
+      }
+    })();
+  </script>
+
+</body>
+</html>
